@@ -1,0 +1,15 @@
+body {
+    background: #F5F6FB
+}
+
+@font-face {
+    font-family: "American TextC";
+    src: url("../fonts/American TextC.ttf") format("truetype");
+    font-style: normal;
+    font-weight: normal;
+}
+div.header_logo {
+    font-family: "American TextC";
+    font-size: 2rem;
+    color: orange
+}
