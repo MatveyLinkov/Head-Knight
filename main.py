@@ -27,7 +27,7 @@ def index():
 def home():
     db_sess = db_session.create_session()
     user = db_sess.query(User)
-    return render_template('base.html', title='Главная | Head-Knight', user=user, auth=False)
+    return render_template('home.html', title='Главная | Head-Knight', user=user, auth=False, home=True)
 
 
 @app.route('/register', methods=['GET', 'POST'])

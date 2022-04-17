@@ -10,34 +10,52 @@
 </head>
 <body style="bgcolor: #F5F6FB">
 <header>
-    <nav class="navbar navbar-light bg-white">
         <div class="container-fluid">
-            <a href="/home" style="text-decoration: none">
-                <div class="header_logo" translate="no">Head-Knight</div>
-            </a>
-            {% if current_user.is_authenticated %}
-                <a class="navbar-brand" href="/logout">
-                    {{ current_user.nickname }}
+            <div class="head">
+                <div class="container-fluid">
+                    <a href="/home" style="text-decoration: none">
+                        <div class="header_logo" translate="no" style="width: 100%">Head-Knight</div>
+                    </a>
+                    <div style="width: 100%; margin: auto; max-width: 50em"></div>
+                    {% if current_user.is_authenticated %}
+                        <a class="navbar-brand" href="/logout">
+                            {{ current_user.nickname }}
+                        </a>
+                    {% else %}
+                        {% if not auth %}
+                            <p>
+                                <a class="btn btn-primary" href="/login" style="margin-top: 3px">
+                                    Войти
+                                </a>
+                            </p>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    <div class="head">
+        {% if not auth %}
+            <div style="margin-top: 25px; margin-left: 45px">
+                <a href="home" style="text-decoration: none; color: white">
+                    Главная
                 </a>
-            {% else %}
-                {% if not auth %}
-                    <p>
-                        <a class="btn btn-primary" href="/login">Войти</a>
-                    </p>
+                {% if home %}
+                    <div class="root"><img src="../static/images/email.svg" width="33" height="25">
+                        <a href="mailto:matvey23lin@gmail.com" style="color: white">
+                            matvey23lin@gmail.com
+                        </a>
+                        <img src="../static/images/discord.png" width="25" height="25" style="margin-left: 20px">
+                        <a>Discord: WaiTeF#1001</a>
+                    </div>
                 {% endif %}
-            {% endif %}
-        </div>
-    </nav>
-    {% if not auth %}
-        <div style="margin-top: 25px; margin-left: 45px">
-            <a href="home" style="text-decoration: none; color: black">Главная</a>
-        </div>
-    {% endif %}
+                <a href="friends" style="text-decoration: none; color: white">
+                    Друзья
+                </a>
+        {% endif %}
+                {% block content %}{% endblock %}
+            </div>
+    </div>
 </header>
 <br>
-<!-- Begin page content -->
-<main role="main" class="container">
-    {% block content %}{% endblock %}
-</main>
 </body>
 </html>

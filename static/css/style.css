@@ -1,7 +1,12 @@
 body {
-    background: #F5F6FB
+    background: #0C0F1D
 }
-
+p {
+    color: white
+}
+div {
+    color: white
+}
 @font-face {
     font-family: "American TextC";
     src: url("../fonts/American TextC.ttf") format("truetype");
@@ -12,4 +17,20 @@ div.header_logo {
     font-family: "American TextC";
     font-size: 2rem;
     color: orange
+}
+div.head {
+    width: 100%;
+    margin: auto;
+    max-width: 80em;
+}
+div.root {
+    width: 800px;
+    margin: auto;
+    max-width: 50em;
+    background: #1B1D2A
+}
+div.container-fluid {
+    background: #1B1D2A;
+    display: flex;
+    height: inherit
 }
