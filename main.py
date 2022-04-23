@@ -1,9 +1,9 @@
-from flask import Flask, render_template, redirect
+from flask import Flask, render_template, redirect, request
 from data import db_session
+from flask_login import LoginManager, login_user, login_required, logout_user
 from data.users import User
 from forms.user import RegisterForm
 from forms.login import LoginForm
-from flask_login import LoginManager, login_user, login_required, logout_user
 
 
 app = Flask(__name__)
@@ -27,7 +27,13 @@ def index():
 def home():
     db_sess = db_session.create_session()
     user = db_sess.query(User)
-    return render_template('home.html', title='Главная | Head-Knight', user=user, auth=False, home=True)
+    return render_template('home.html', title='Главная | Head-Knight',
+                           user=user, auth=False, home=True)
+
+
+@app.route('/community')
+def community():
+    return redirect('/home')
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -79,7 +85,7 @@ def logout():
 
 
 def main():
-    db_session.global_init('db/knight.sqlite')
+    db_session.global_init('db/knight_users.sqlite')
     app.run()
 
 

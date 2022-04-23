@@ -8,7 +8,7 @@
      <link rel="stylesheet" href="../static/css/style.css">
     <title translate="no">{{ title }}</title>
 </head>
-<body style="bgcolor: #F5F6FB">
+<body>
 <header>
         <div class="container-fluid">
             <div class="head">
@@ -18,7 +18,7 @@
                     </a>
                     <div style="width: 100%; margin: auto; max-width: 50em"></div>
                     {% if current_user.is_authenticated %}
-                        <a class="navbar-brand" href="/logout">
+                        <a class="navbar-brand" href="/logout" style="color: white; margin-top: 5px">
                             {{ current_user.nickname }}
                         </a>
                     {% else %}
@@ -36,21 +36,22 @@
     <div class="head">
         {% if not auth %}
             <div style="margin-top: 25px; margin-left: 45px">
-                <a href="home" style="text-decoration: none; color: white">
-                    Главная
-                </a>
-                {% if home %}
-                    <div class="root"><img src="../static/images/email.svg" width="33" height="25">
-                        <a href="mailto:matvey23lin@gmail.com" style="color: white">
-                            matvey23lin@gmail.com
-                        </a>
-                        <img src="../static/images/discord.png" width="25" height="25" style="margin-left: 20px">
-                        <a>Discord: WaiTeF#1001</a>
-                    </div>
-                {% endif %}
-                <a href="friends" style="text-decoration: none; color: white">
-                    Друзья
-                </a>
+                <table style="float: left">
+                    <tr>
+                        <td>
+                            <a href="home" style="text-decoration: none; color: white">
+                                Главная
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="community" style="text-decoration: none; color: white">
+                                Сообщество
+                            </a>
+                        </td>
+                    </tr>
+                </table>
         {% endif %}
                 {% block content %}{% endblock %}
             </div>
