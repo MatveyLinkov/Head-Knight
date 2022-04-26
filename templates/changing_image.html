@@ -16,10 +16,12 @@
         Оставайтесь на связи и следите за обновлениями.
     </div>
     <br>
-    <form enctype="multipart/form-data" method="post">
-        <p>Загрузите ваши фотографии на сервер</p>
-        <p><input type="file" name="photo" multiple accept="image/*,image/jpeg"><br><br>
-            <input type="submit" value="Сменить фото профиля"></p>
+    <form method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="photo">Выберите файл</label>
+            <input type="file" class="form-control-file" id="photo" name="file">
+        </div>
+        <button type="submit" class="btn btn-primary">Отправить</button>
     </form>
 </div>
 {% endblock %}

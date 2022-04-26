@@ -41,10 +41,17 @@ def home():
 
 @app.route('/icon_changing', methods=["GET", "POST"])
 def image_of_profile():
-    db_sess = db_session.create_session()
-    user = db_sess.query(User)
-    return render_template('changing_image.html', title='Меняем картинку',
-                           user=user)
+    if request.method == 'GET':
+        db_sess = db_session.create_session()
+        user = db_sess.query(User)
+        return render_template('changing_image.html', title='Меняем картинку',
+                               user=user)
+    elif request.method == 'POST':
+        encoded_string = request.files['file'].read()
+        print(encoded_string)
+        with open("static/images/avatar.jpg", "wb") as img:
+            img.write(encoded_string)
+    return redirect('/home')
 
 
 @app.route('/community')
