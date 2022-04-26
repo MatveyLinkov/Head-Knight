@@ -16,7 +16,7 @@ def load_user(user_id):
     db_sess = db_session.create_session()
     return db_sess.query(User).get(user_id)
 
-
+4
 @app.route('/')
 def index():
     return redirect('/home')
