@@ -3,40 +3,48 @@
 {% block content %}
 <div class="basis">
     <div>
-        <img style="margin-left: 100px;" src="../static/images/friends.png" width="300" height="275"> <img style="margin-left: 40px;" src="../static/images/friends_2.png" width="250" height="125">
+        <img style="margin-left: 100px;" src="../static/images/friends.png" width="300"
+             height="275"> <img style="margin-left: 40px;" src="../static/images/friends_2.png"
+                                width="250" height="125">
     </div>
     <br>
-    <p class="bio">Итак, {{current_user.nickname}} видимо настало ваше время расширить свою команду для игр! Здесь вы можете <big><ins>подписаться</ins></big> на своего знакомого
-        или рандомного человека, а с помощью нашего <b><i>телеграм-бота</i></b> вы получите <big><ins>информацию для контакта с ним</ins></big>!
-    Чего же вы ждёте? Вперёд, на поиски!</p>
+    <p class="bio">Итак, {{current_user.nickname}} видимо настало ваше время расширить свою команду
+        для игр! Здесь вы можете <big>
+            <ins>подписаться</ins>
+        </big> на своего знакомого
+        или рандомного человека, а с помощью нашего <b><i>телеграм-бота</i></b> вы получите <big>
+            <ins>информацию для контакта с ним</ins>
+        </big>!
+        Чего же вы ждёте? Вперёд, на поиски!
+    </p>
     <table>
         <tr>
             <td>
-                <p class="bio" style="margin-left: 275px; color: #C0C0C0;"><big>Кол-во подписчиков: 0</big></p>
-            </td></tr>
+                <p class="bio" style="margin-left: 275px; color: #C0C0C0;"><big>Кол-во подписчиков:
+                    0</big></p>
+            </td>
+        </tr>
         <tr>
             <td>
-                <p class="bio" style="margin-left: 275px; color: #C0C0C0;"><big>Кол-во подписок: 0</big></p>
-            </td></tr>
+                <p class="bio" style="margin-left: 275px; color: #C0C0C0;"><big>Кол-во подписок:
+                    0</big></p>
+            </td>
+        </tr>
 
     </table>
 
     <br>
     <p class="bio">
-        Ниже вы можете лицезреть список всех зарегистрировавшихся пользователей! Удачи в выборе <i>сокомандника ^-^</i>!
+        Ниже вы можете лицезреть список всех зарегистрировавшихся пользователей! Удачи в выборе <i>сокомандника
+        ^-^</i>!
     </p>
     <br>
-    <div style="margin-top: 10px; margin-left: 225px">
+    <div style="margin-top: 10px; margin-left: 300px">
         <table style="float: left">
             {% for item in spisok_nicknames %}
             <tr>
                 <td>
                     {{ item }}
-                </td>
-                <td>
-                    <a href="/subscribe/{{spisok_nicknames[loop.index - 1]}}" style="margin-left: 70px; color: white">
-                        Подписаться
-                    </a>
                 </td>
             </tr>
             {% endfor %}
