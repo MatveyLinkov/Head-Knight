@@ -63,10 +63,13 @@ def image_of_profile():
                                user=user, avatar=user_avatar())
     elif request.method == 'POST':
         encoded_string = request.files['file'].read()
-        print(encoded_string)
-        with open(f"static/avatars/{current_user.nickname}.jpg", "wb") as img:
-            img.write(encoded_string)
-    return redirect('/home')
+        print(type(encoded_string))
+        if str(encoded_string) == "b''":
+            return redirect('/icon_changing')
+        else:
+            with open(f"static/avatars/{current_user.nickname}.jpg", "wb") as img:
+                img.write(encoded_string)
+            return redirect('/home')
 
 
 @app.route('/community')
