@@ -79,7 +79,10 @@ def help(update, context):
                               '/logout - выход из профиля\n'
                               '/subscribe - подписаться на пользователя\n'
                               '/subscribers - список подписчиков\n'
-                              '/subscriptions - список подписок')
+                              '/subscriptions - список подписок\n'
+                              '/users - список пользователей\n'
+                              '/project_info - информация о проекте\n'
+                              '/github - ссылка на Github репозиторий')
 
 
 def login(update, context):
@@ -136,7 +139,8 @@ def subscribers(update, context):
                                 filter(lambda x: x["nickname"] == subscriber, users))[0]["username"]
                             subscribers_list[subscribers_list.index(subscriber)] += \
                                 f' - t.me/{username}'
-                update.message.reply_text('\n'.join(subscribers_list))
+                update.message.reply_text('\n'.join([f'Подписчики - {len(subscribers_list)}'] +
+                                                    subscribers_list))
             else:
                 update.message.reply_text('У вас нет подписчиков :(')
 
@@ -159,9 +163,29 @@ def subscriptions(update, context):
                                        subscription, users))[0]["username"]
                             subscriptions_list[subscriptions_list.index(subscription)] += \
                                 f' - t.me/{username}'
-                update.message.reply_text('\n'.join(subscriptions_list))
+                update.message.reply_text('\n'.join([f'Подписчики - {len(subscriptions_list)}'] +
+                                                    subscriptions_list))
             else:
                 update.message.reply_text('У вас нет подписок.')
+
+
+def users(update, context):
+    with open('json_directory/friends.json', 'r', encoding='utf-8') as loaded_file:
+        data = json.load(loaded_file)
+        update.message.reply_text('\n'.join([f'{user} - {len(data[user]["subscribers"])} subs'
+                                             for user in data.keys()]))
+
+
+def project_info(update, context):
+    update.message.reply_text('Head Knight\n'
+                              'Экшен игра, в которой действия разворачиваются в подземелье. '
+                              'В ней игроку предстоит сразиться с монстрами. '
+                              'В игре ещё много интересного!')
+
+
+def github(update, context):
+    update.message.reply_text('[Github](https://github.com/MatveyLinkov/Head-Knight_game)',
+                              parse_mode='Markdown')
 
 
 def main():
@@ -176,6 +200,9 @@ def main():
     dp.add_handler(CommandHandler('subscribe', subscribe))
     dp.add_handler(CommandHandler('subscribers', subscribers))
     dp.add_handler(CommandHandler('subscriptions', subscriptions))
+    dp.add_handler(CommandHandler('users', users))
+    dp.add_handler(CommandHandler('project_info', project_info))
+    dp.add_handler(CommandHandler('github', github))
     updater.start_polling()
     updater.idle()
 

@@ -1,4 +1,5 @@
 import os
+import json
 from flask import Flask, render_template, redirect, request
 from data import db_session
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
@@ -104,6 +105,11 @@ def register():
         user.set_password(form.password.data)
         db_sess.add(user)
         db_sess.commit()
+        with open('json_directory/friends.json', 'r', encoding='utf-8') as loaded_file:
+            data = json.load(loaded_file)
+            with open('json_directory/friends.json', 'w', encoding='utf-8') as dumped_file:
+                data[form.nickname.data] = {'subscribers': [], 'subscriptions': []}
+                json.dump(data, dumped_file)
         return redirect('/login')
     return render_template('register.html', title='Регистрация | Head-Knight', auth=True, form=form)
 
@@ -118,7 +124,7 @@ def login():
             user = db_sess.query(User).filter(User.nickname == form.login.data).first()
         if user and user.check_password(form.password.data):
             login_user(user, remember=form.remember_me.data)
-            return redirect('/')
+            return redirect('/home')
         return render_template('login.html', title='Войти | Head-Knight',
                                message='Неверный логин или пароль', auth=True, form=form)
     return render_template('login.html', title='Войти | Head-Knight', auth=True, form=form)
@@ -128,7 +134,7 @@ def login():
 @login_required
 def logout():
     logout_user()
-    return redirect('/')
+    return redirect('/home')
 
 
 def main():
