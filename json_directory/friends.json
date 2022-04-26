@@ -1,15 +1,15 @@
 {
   "WaiTeF": {
-    "subscribers": [],
-    "subscriptions": []
+    "subscribers": ["MSI_Archangel", "Polzovatyel_first_test"],
+    "subscriptions": ["MSI_Archangel"]
   },
   "MSI_Archangel": {
-    "subscribers": [],
-    "subscriptions": []
+    "subscribers": ["WaiTeF"],
+    "subscriptions": ["WaiTeF"]
   },
   "Polzovatyel_first_test": {
     "subscribers": [],
-    "subscriptions": []
+    "subscriptions": ["WaiTeF"]
   },
   "None": {
     "subscribers": [],

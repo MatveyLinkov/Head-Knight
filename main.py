@@ -36,9 +36,13 @@ def index():
 def friends():
     db_sess = db_session.create_session()
     user = db_sess.query(User)
-    list_of_nicknames = [x[0] for x in db_sess.query(User.nickname)]
-    return render_template('friends.html', title='Friends', user=user, avatar=user_avatar(),
-                           spisok_nicknames=list_of_nicknames)
+    with open('json_directory/friends.json', 'r') as loaded_file:
+        data = json.load(loaded_file)
+        subs = len(data[current_user.nickname]['subscribers'])
+        ons = len(data[current_user.nickname]['subscriptions'])
+        list_of_nicknames = [x[0] for x in db_sess.query(User.nickname)]
+        return render_template('friends.html', title='Friends', user=user, avatar=user_avatar(),
+                               spisok_nicknames=list_of_nicknames, users_subs=subs, users_ons=ons)
 
 
 @app.route('/home')
