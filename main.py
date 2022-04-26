@@ -1,6 +1,7 @@
+import os
 from flask import Flask, render_template, redirect, request
 from data import db_session
-from flask_login import LoginManager, login_user, login_required, logout_user
+from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from data.users import User
 from forms.user import RegisterForm
 from forms.login import LoginForm
@@ -11,12 +12,20 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 
+def user_avatar():
+    avatar = '../static/avatars/None.jpg'
+    if isinstance(current_user, User):
+        if os.path.isfile(f'static/avatars/{current_user.nickname}.jpg'):
+            avatar = f'../static/avatars/{current_user.nickname}.jpg'
+    return avatar
+
+
 @login_manager.user_loader
 def load_user(user_id):
     db_sess = db_session.create_session()
     return db_sess.query(User).get(user_id)
 
-4
+
 @app.route('/')
 def index():
     return redirect('/home')
@@ -27,7 +36,7 @@ def friends():
     db_sess = db_session.create_session()
     user = db_sess.query(User)
     list_of_nicknames = [x[0] for x in db_sess.query(User.nickname)]
-    return render_template('friends.html', title='Friends', user=user,
+    return render_template('friends.html', title='Friends', user=user, avatar=user_avatar(),
                            spisok_nicknames=list_of_nicknames)
 
 
@@ -36,20 +45,20 @@ def home():
     db_sess = db_session.create_session()
     user = db_sess.query(User)
     return render_template('home.html', title='Главная | Head-Knight',
-                           user=user, auth=False, home=True)
+                           avatar=user_avatar(), user=user, auth=False, home=True)
 
 
 @app.route('/icon_changing', methods=["GET", "POST"])
 def image_of_profile():
+    db_sess = db_session.create_session()
+    user = db_sess.query(User)
     if request.method == 'GET':
-        db_sess = db_session.create_session()
-        user = db_sess.query(User)
         return render_template('changing_image.html', title='Меняем картинку',
-                               user=user)
+                               user=user, avatar=user_avatar())
     elif request.method == 'POST':
         encoded_string = request.files['file'].read()
         print(encoded_string)
-        with open("static/images/avatar.jpg", "wb") as img:
+        with open(f"static/avatars/{current_user.nickname}.jpg", "wb") as img:
             img.write(encoded_string)
     return redirect('/home')
 
