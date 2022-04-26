@@ -48,9 +48,9 @@ def home():
                            avatar=user_avatar(), user=user, auth=False, home=True)
 
 
-@app.route('/subscribe/<int:number_button>')
-def subscribing(number_button):
-    print(number_button)
+@app.route('/subscribe/<nickname>')
+def subscribing(nickname):
+    print(nickname)
     return redirect('/friends')
 
 
