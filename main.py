@@ -93,6 +93,10 @@ def register():
         elif db_sess.query(User).filter(User.nickname == form.nickname.data).first():
             return render_template('register.html', title='Регистрация | Head-Knight', auth=True,
                                    form=form, message='Имя пользователя уже занято')
+        elif len(form.nickname.data.split()) > 0:
+            return render_template('register.html', title='Регистрация | Head-Knight', auth=True,
+                                   form=form,
+                                   message='Имя пользователя не должен содержать пробелов!')
         user = User()
         user.email = form.email.data
         user.nickname = form.nickname.data
