@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="basis">
+    <div>
+        <img src="../static/images/knight копия.png" width="96" height="100">
+    </div>
+    <br>
+    <div class="bio">Привет! Я WaiTeF. Я самопровозглашенный разработчик игр и программист.</div>
+    <br>
+    <div class="bio">
+        В моем портфолио не так уж и много игр, но вот одна из них.
+        Я решил поделится ей, создав этот сайт. От сюда вы можете перейти в репозиторий на Github,
+        а оттуда уже скачать архив с игрой и ознакомиться с ней.
+        Вы читаете бета версию вступительного текста, возможно в будущем он изменится.
+        Оставайтесь на связи и следите за обновлениями.
+    </div>
+    <br>
+    <form enctype="multipart/form-data" method="post">
+        <p>Загрузите ваши фотографии на сервер</p>
+        <p><input type="file" name="photo" multiple accept="image/*,image/jpeg"><br><br>
+            <input type="submit" value="Сменить фото профиля"></p>
+    </form>
+</div>
+{% endblock %}

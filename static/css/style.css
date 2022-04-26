@@ -1,7 +1,28 @@
 body {
-    background: #F5F6FB
+    background: #0C0F24
 }
-
+p {
+    color: white
+}
+div {
+    color: white
+}
+h1.root {
+    font-size: 1.75em;
+    background-color: #1B1D36;
+    padding: 0.5em;
+    margin-bottom: 1em;
+    margin-top: 2em;
+}
+h2 {
+    display: block;
+    font-size: 1.5em;
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
 @font-face {
     font-family: "American TextC";
     src: url("../fonts/American TextC.ttf") format("truetype");
@@ -12,4 +33,41 @@ div.header_logo {
     font-family: "American TextC";
     font-size: 2rem;
     color: orange
+}
+div.head {
+    width: 100%;
+    margin: auto;
+    max-width: 80em;
+}
+div.root {
+    width: 800px;
+    margin: auto;
+    max-width: 50em;
+    background: #1B1D36
+}
+div.basis {
+    width: 800px;
+    margin: auto;
+    max-width: 50em;
+}
+img.projectimg {
+    flex: 100%;
+    max-width: 30em;
+    margin-top: 1em;
+    float: right
+}
+div.container-fluid {
+    background: #1B1D36;
+    display: flex;
+    height: inherit
+}
+div.bio {
+    padding: 0;
+    margin: 0;
+    font-family: 'Lato',sans-serif;
+}
+a.github {
+    color: white;
+    cursor: pointer;
+    text-decoration: underline;
 }

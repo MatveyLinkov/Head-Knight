@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="basis">
+    <div>
+        <img src="../static/images/knight копия.png" width="96" height="100">
+    </div>
+    <br>
+    <div class="bio">Итак, приветствуем вас в списке друзей!</div>
+    <br>
+    <div class="bio">
+        Это поле для вывода всех пользователей
+    </div>
+    <br>
+    {% for item in spisok_nicknames %}
+    <div>
+        {{ item }}
+        <button type="submit" class="btn btn-primary">Подписаться</button>
+    </div><br>
+    {% endfor %}
+</div>
+{% endblock %}
