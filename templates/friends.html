@@ -7,16 +7,39 @@
     </div>
     <br>
     <div class="bio">Итак, приветствуем вас в списке друзей!</div>
+    <table>
+        <tr>
+            <td>
+                <p class="bio" style="margin-left: 550px; color: grey;"><big>Кол-во подписчиков: 0</big></p>
+            </td></tr>
+        <tr>
+            <td>
+                <p class="bio" style="margin-left: 550px; color: grey;"><big>Кол-во подписок: 0</big></p>
+            </td></tr>
+
+    </table>
+
     <br>
     <div class="bio">
         Это поле для вывода всех пользователей
     </div>
     <br>
-    {% for item in spisok_nicknames %}
-    <div>
-        {{ item }}
-        <button type="submit" class="btn btn-primary">Подписаться</button>
-    </div><br>
-    {% endfor %}
+    <div style="margin-top: 10px; margin-left: 30px">
+        <table style="float: left">
+            {% for item in spisok_nicknames %}
+            <tr>
+                <td>
+                    {{ item }}
+                </td>
+                <td>
+                    <a href="/subscribe/{{loop.index}}" style="margin-left: 50px; color: white">
+                        Подписаться
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <br>
 </div>
 {% endblock %}

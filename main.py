@@ -48,6 +48,12 @@ def home():
                            avatar=user_avatar(), user=user, auth=False, home=True)
 
 
+@app.route('/subscribe/<int:number_button>')
+def subscribing(number_button):
+    print(number_button)
+    return redirect('/friends')
+
+
 @app.route('/icon_changing', methods=["GET", "POST"])
 def image_of_profile():
     db_sess = db_session.create_session()
