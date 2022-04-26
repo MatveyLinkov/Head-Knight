@@ -1,5 +1,33 @@
 {% extends "base.html" %}
 
 {% block content %}
-
+<div class="basis">
+    <div>
+        <img style="margin-left: 225px;" src="../static/images/Community.png" width="425"
+             height="425">
+    </div>
+    <br>
+    <div class="bio">Место, где скоро будут публиковаться
+        <ins>новости</ins>
+        и информация о различных
+        <ins>ивентах</ins>
+        нашего <big>игрового пространства</big>!
+    </div>
+    <br>
+    <p class="bio">
+        Приветсвую вас, {{current_user.nickname}} в игровом комьюнити прекрасного проекта <b>Head-Knight</b>!
+        После регистрации на нашем сайте - вы станете его неотемлемой частью, а с каждым днём
+        количество пользователей будет расти <i>вверх</i>!
+        Чтож, мы рады каждому, независимо от вашего возраста и поколения :)
+        Приятной игры и времяпровождения на нашем сайте!
+    </p>
+    <br>
+    {% if not current_user.is_authenticated %}
+    <p>
+        <a class="btn btn-primary" href="/register" style="margin-top: 3px; margin-left: 190px;">
+            Я хочу стать частичкой комьюнити, скорее регистрироваться!
+        </a>
+    </p>
+    {% endif %}
+</div>
 {% endblock %}

@@ -74,7 +74,9 @@ def image_of_profile():
 
 @app.route('/community')
 def community():
-    return redirect('/home')
+    db_sess = db_session.create_session()
+    user = db_sess.query(User)
+    return render_template('community.html', title="Community", avatar=user_avatar(), user=user)
 
 
 @app.route('/register', methods=['GET', 'POST'])
