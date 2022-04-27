@@ -73,6 +73,12 @@ def query_continuation(update, context):
                                   'Для ознакомления с командами воспользуйтесь /help')
 
 
+def start(update, context):
+    update.message.reply_text('Вас приветствует телеграм-бот!\n'
+                              'Здесь вы можете испытать возможные функции.\n'
+                              'Для ознакомления с командами воспользуйтесь /help')
+
+
 def help(update, context):
     update.message.reply_text('Команды:\n'
                               '/login - авторизация\n'
@@ -83,7 +89,7 @@ def help(update, context):
                               '/subscriptions - список подписок\n'
                               '/users - список пользователей\n'
                               '/project_info - информация о проекте\n'
-                              '/github - ссылка на Github репозиторий')
+                              '/github - ссылка на репозиторий игры на Github')
 
 
 def login(update, context):
@@ -118,13 +124,18 @@ def nickname(update, context):
             update.message.reply_text(list(filter(
                 lambda x: x['user_id'] == update.message.from_user.id, data))[0]['nickname'])
         else:
-            update.message.reply_text('Войдите в свой аккаунт!')
+            update.message.reply_text('Войдите в аккаунт!')
 
 
 def subscribe(update, context):
     global subscribe_var
-    subscribe_var = True
-    update.message.reply_text('Отправьте имя пользователя, на которого хотите подписаться.')
+    with open('json_directory/telegram_users.json') as loaded_file:
+        data = json.load(loaded_file)
+        if update.message.from_user.id in [el['user_id'] for el in data]:
+            subscribe_var = True
+            update.message.reply_text('Отправьте имя пользователя, на которого хотите подписаться.')
+        else:
+            update.message.reply_text('Войдите в аккаунт!')
 
 
 def subscribers(update, context):
@@ -132,23 +143,26 @@ def subscribers(update, context):
         friends = json.load(friends_file)
         with open('json_directory/telegram_users.json') as users_file:
             users = json.load(users_file)
-            current_user = list(filter(lambda x: x['user_id'] == update.message.from_user.id,
-                                       users))[0]['nickname']
-            subscribers_list = friends[current_user]['subscribers']
-            if subscribers_list:
-                for subscriber in subscribers_list:
-                    if current_user in friends[subscriber]['subscribers'] and \
-                            subscriber in friends[current_user]['subscriptions']:
-                        if list(filter(lambda x: x["nickname"] == subscriber, users)) and \
-                                subscriber in [el['nickname'] for el in users]:
-                            username = list(
-                                filter(lambda x: x["nickname"] == subscriber, users))[0]["username"]
-                            subscribers_list[subscribers_list.index(subscriber)] += \
-                                f' - t.me/{username}'
-                update.message.reply_text('\n'.join([f'Подписчики - {len(subscribers_list)}'] +
-                                                    subscribers_list))
+            if update.message.from_user.id in [el['user_id'] for el in users]:
+                current_user = list(filter(lambda x: x['user_id'] == update.message.from_user.id,
+                                           users))[0]['nickname']
+                subscribers_list = friends[current_user]['subscribers']
+                if subscribers_list:
+                    for subscriber in subscribers_list:
+                        if current_user in friends[subscriber]['subscribers'] and \
+                                subscriber in friends[current_user]['subscriptions']:
+                            if list(filter(lambda x: x["nickname"] == subscriber, users)) and \
+                                    subscriber in [el['nickname'] for el in users]:
+                                username = list(filter(
+                                    lambda x: x["nickname"] == subscriber, users))[0]["username"]
+                                subscribers_list[subscribers_list.index(subscriber)] += \
+                                    f' - t.me/{username}'
+                    update.message.reply_text('\n'.join([f'Подписчики - {len(subscribers_list)}'] +
+                                                        subscribers_list))
+                else:
+                    update.message.reply_text('У вас нет подписчиков :(')
             else:
-                update.message.reply_text('У вас нет подписчиков :(')
+                update.message.reply_text('Войдите в аккаунт!')
 
 
 def subscriptions(update, context):
@@ -156,23 +170,26 @@ def subscriptions(update, context):
         friends = json.load(friends_file)
         with open('json_directory/telegram_users.json') as users_file:
             users = json.load(users_file)
-            current_user = list(filter(lambda x: x['user_id'] == update.message.from_user.id,
-                                       users))[0]['nickname']
-            subscriptions_list = friends[current_user]['subscriptions']
-            if subscriptions_list:
-                for subscription in subscriptions_list:
-                    if current_user in friends[subscription]['subscriptions'] and \
-                            subscription in friends[current_user]['subscribers']:
-                        if list(filter(lambda x: x["nickname"] == subscription, users)):
-                            username = list(
-                                filter(lambda x: x["nickname"] ==
-                                       subscription, users))[0]["username"]
-                            subscriptions_list[subscriptions_list.index(subscription)] += \
-                                f' - t.me/{username}'
-                update.message.reply_text('\n'.join([f'Подписки - {len(subscriptions_list)}'] +
-                                                    subscriptions_list))
+            if update.message.from_user.id in [el['user_id'] for el in users]:
+                current_user = list(filter(lambda x: x['user_id'] == update.message.from_user.id,
+                                           users))[0]['nickname']
+                subscriptions_list = friends[current_user]['subscriptions']
+                if subscriptions_list:
+                    for subscription in subscriptions_list:
+                        if current_user in friends[subscription]['subscriptions'] and \
+                                subscription in friends[current_user]['subscribers']:
+                            if list(filter(lambda x: x["nickname"] == subscription, users)):
+                                username = list(
+                                    filter(lambda x: x["nickname"] ==
+                                           subscription, users))[0]["username"]
+                                subscriptions_list[subscriptions_list.index(subscription)] += \
+                                    f' - t.me/{username}'
+                    update.message.reply_text('\n'.join([f'Подписки - {len(subscriptions_list)}'] +
+                                                        subscriptions_list))
+                else:
+                    update.message.reply_text('У вас нет подписок.')
             else:
-                update.message.reply_text('У вас нет подписок.')
+                update.message.reply_text('Войдите в аккаунт!')
 
 
 def users(update, context):
@@ -196,9 +213,11 @@ def github(update, context):
 
 def main():
     updater = Updater(TOKEN)
+    db_session.global_init('db/knight_users.sqlite')
     dp = updater.dispatcher
     text_handler = MessageHandler(Filters.text & ~Filters.command, query_continuation)
     dp.add_handler(text_handler)
+    dp.add_handler(CommandHandler('start', start))
     dp.add_handler(CommandHandler('help', help))
     dp.add_handler(CommandHandler('login', login))
     dp.add_handler(CommandHandler('logout', logout))
@@ -214,5 +233,4 @@ def main():
 
 
 if __name__ == '__main__':
-    db_session.global_init('db/knight_users.sqlite')
     main()

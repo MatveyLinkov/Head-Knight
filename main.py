@@ -1,6 +1,7 @@
 import os
 import json
 from flask import Flask, render_template, redirect, request
+
 from data import db_session
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from data.users import User
@@ -44,7 +45,8 @@ def friends():
             subs = len(data[current_user.nickname]['subscribers'])
             ons = len(data[current_user.nickname]['subscriptions'])
         list_of_nicknames = [x[0] for x in db_sess.query(User.nickname)]
-        return render_template('friends.html', title='Friends', user=user, avatar=user_avatar(),
+        return render_template('friends.html', title='Друзья | Head-Knight',
+                               user=user, avatar=user_avatar(),
                                spisok_nicknames=list_of_nicknames, users_subs=subs, users_ons=ons)
 
 
@@ -82,7 +84,8 @@ def image_of_profile():
 def community():
     db_sess = db_session.create_session()
     user = db_sess.query(User)
-    return render_template('community.html', title="Community", avatar=user_avatar(), user=user)
+    return render_template('community.html', title="Сообщество | Head-Knight",
+                           avatar=user_avatar(), user=user)
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -99,7 +102,7 @@ def register():
         elif db_sess.query(User).filter(User.nickname == form.nickname.data).first():
             return render_template('register.html', title='Регистрация | Head-Knight', auth=True,
                                    form=form, message='Имя пользователя уже занято')
-        elif len(form.nickname.data.split()) > 0:
+        elif form.nickname.data.count(' ') > 0:
             return render_template('register.html', title='Регистрация | Head-Knight', auth=True,
                                    form=form,
                                    message='Имя пользователя не должно содержать пробелов!')
@@ -144,7 +147,8 @@ def logout():
 
 def main():
     db_session.global_init('db/knight_users.sqlite')
-    app.run()
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
 
 
 if __name__ == '__main__':
