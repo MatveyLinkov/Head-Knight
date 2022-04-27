@@ -56,8 +56,8 @@ def query_continuation(update, context):
                 if respondent in data_friends:
                     with open('json_directory/friends.json', 'w', encoding='utf-8') as friends_file:
                         current_user = list(filter(
-                            lambda x: x['user_id'] ==
-                                      update.message.from_user.id, users))[0]['nickname']
+                            lambda x:
+                            x['user_id'] == update.message.from_user.id, users))[0]['nickname']
                         if respondent not in data_friends[current_user]['subscriptions']:
                             data_friends[current_user]['subscriptions'] += [respondent]
                             data_friends[respondent]['subscribers'] += [current_user]
@@ -77,6 +77,7 @@ def help(update, context):
     update.message.reply_text('Команды:\n'
                               '/login - авторизация\n'
                               '/logout - выход из профиля\n'
+                              '/nickname - отправляет имя пользователя\n'
                               '/subscribe - подписаться на пользователя\n'
                               '/subscribers - список подписчиков\n'
                               '/subscriptions - список подписок\n'
@@ -87,9 +88,14 @@ def help(update, context):
 
 def login(update, context):
     global login_var
-    login_var = True
-    update.message.reply_text('Отправьте свой адрес электронной почты или '
-                              'имя пользователя и пароль. (<name> <password>)')
+    with open('json_directory/telegram_users.json') as loaded_file:
+        data = json.load(loaded_file)
+        if update.message.from_user.username not in [el['username'] for el in data]:
+            login_var = True
+            update.message.reply_text('Отправьте свой адрес электронной почты или '
+                                      'имя пользователя и пароль. (<name> <password>)')
+        else:
+            update.message.reply_text('Вы уже вошли в аккаунт.')
 
 
 def logout(update, context):
@@ -163,7 +169,7 @@ def subscriptions(update, context):
                                        subscription, users))[0]["username"]
                             subscriptions_list[subscriptions_list.index(subscription)] += \
                                 f' - t.me/{username}'
-                update.message.reply_text('\n'.join([f'Подписчики - {len(subscriptions_list)}'] +
+                update.message.reply_text('\n'.join([f'Подписки - {len(subscriptions_list)}'] +
                                                     subscriptions_list))
             else:
                 update.message.reply_text('У вас нет подписок.')

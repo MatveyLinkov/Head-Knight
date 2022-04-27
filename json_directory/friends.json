@@ -1,18 +1,1 @@
-{
-  "WaiTeF": {
-    "subscribers": ["MSI_Archangel", "Polzovatyel_first_test"],
-    "subscriptions": ["MSI_Archangel"]
-  },
-  "MSI_Archangel": {
-    "subscribers": ["WaiTeF"],
-    "subscriptions": ["WaiTeF"]
-  },
-  "Polzovatyel_first_test": {
-    "subscribers": [],
-    "subscriptions": ["WaiTeF"]
-  },
-  "None": {
-    "subscribers": [],
-    "subscriptions": []
-  }
-}
+{"WaiTeF": {"subscribers": ["MSI_Archangel", "Polzovatyel_first_test"], "subscriptions": ["MSI_Archangel"]}, "MSI_Archangel": {"subscribers": ["WaiTeF"], "subscriptions": ["WaiTeF"]}, "Polzovatyel_first_test": {"subscribers": [], "subscriptions": ["WaiTeF"]}, "None": {"subscribers": [], "subscriptions": []}}

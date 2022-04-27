@@ -36,10 +36,13 @@ def index():
 def friends():
     db_sess = db_session.create_session()
     user = db_sess.query(User)
+    subs = 0
+    ons = 0
     with open('json_directory/friends.json', 'r') as loaded_file:
         data = json.load(loaded_file)
-        subs = len(data[current_user.nickname]['subscribers'])
-        ons = len(data[current_user.nickname]['subscriptions'])
+        if isinstance(current_user, User):
+            subs = len(data[current_user.nickname]['subscribers'])
+            ons = len(data[current_user.nickname]['subscriptions'])
         list_of_nicknames = [x[0] for x in db_sess.query(User.nickname)]
         return render_template('friends.html', title='Friends', user=user, avatar=user_avatar(),
                                spisok_nicknames=list_of_nicknames, users_subs=subs, users_ons=ons)
@@ -55,7 +58,6 @@ def home():
 
 @app.route('/subscribe/<nickname>')
 def subscribing(nickname):
-    print(nickname)
     return redirect('/friends')
 
 
@@ -68,7 +70,6 @@ def image_of_profile():
                                user=user, avatar=user_avatar())
     elif request.method == 'POST':
         encoded_string = request.files['file'].read()
-        print(type(encoded_string))
         if str(encoded_string) == "b''":
             return redirect('/icon_changing')
         else:
