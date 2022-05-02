@@ -39,6 +39,10 @@ div.head {
     margin: auto;
     max-width: 80em;
 }
+div.header {
+    width: 100%;
+    margin: auto;
+}
 div.root {
     width: 800px;
     margin: auto;
@@ -56,10 +60,18 @@ img.projectimg {
     margin-top: 1em;
     float: right
 }
+div.header__inner {
+    background: #1B1D36;
+    position: relative;
+    height: inherit;
+    width: 1268px;
+    margin: 0 auto
+}
 div.container-fluid {
     background: #1B1D36;
     display: flex;
-    height: inherit
+    height: inherit;
+    max-width: 80em;
 }
 div.bio {
     padding: 0;

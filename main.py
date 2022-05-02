@@ -15,7 +15,7 @@ login_manager.init_app(app)
 
 
 def user_avatar():
-    avatar = '../static/avatars/None.jpg'
+    avatar = '../static/avatars/JohnDoe.jpg'
     if isinstance(current_user, User):
         if os.path.isfile(f'static/avatars/{current_user.nickname}.jpg'):
             avatar = f'../static/avatars/{current_user.nickname}.jpg'
